@@ -206,39 +206,58 @@ public class Gameboard {
 				System.out.println("Invalid input, please try again.");
 			}
 		}
+			
+		System.out.print("Does row " + rowGuess + " and column " + columnGuess + " contain a mine? (y/n): ");
+		String response = scan.next();
+		board[rowGuess - 1][columnGuess - 1].guess = true;
 		
-		while (true) {
+		
+		while (!response.equalsIgnoreCase("n") && !response.equalsIgnoreCase("y") || response.isEmpty()) {
 			
+			System.out.println("Invalid input, please try again.");
 			System.out.print("Does row " + rowGuess + " and column " + columnGuess + " contain a mine? (y/n): ");
-			
-			try {
-				String response = scan.next();
-				response = response.trim().toLowerCase();
-				board[rowGuess - 1][columnGuess - 1].guess = true;
-				
-				if ((response.equals("y") && board[rowGuess - 1][columnGuess - 1].identity == Cell.mine) || (response.equals("n") && board[rowGuess - 1][columnGuess - 1].identity != Cell.mine)) {
-					
-					board[rowGuess - 1][columnGuess - 1].correct = true;
-					minesFound ++;
-					break;
-				}
-				else if ((response.equals("y") && board[rowGuess - 1][columnGuess - 1].identity != Cell.mine) || (response.equals("n") && board[rowGuess - 1][columnGuess - 1].identity == Cell.mine)) {
-					
-					System.out.println("Boom! You lose.");
-					allRight = false;
-					break;
-				}
-				else {
-					
-					throw new InvalidInputException();
-				}
-				
-			} catch (InvalidInputException e) {
-				
-				System.out.println("Invalid input, please try again.");
-			}
+			response = scan.nextLine();
 		}
 		
+		if ((response.equals("y") && board[rowGuess - 1][columnGuess - 1].identity == Cell.mine) || (response.equals("n") && board[rowGuess - 1][columnGuess - 1].identity != Cell.mine)) {
+			
+			board[rowGuess - 1][columnGuess - 1].correct = true;
+			minesFound ++;
+		}
+		else if ((response.equals("y") && board[rowGuess - 1][columnGuess - 1].identity != Cell.mine) || (response.equals("n") && board[rowGuess - 1][columnGuess - 1].identity == Cell.mine)) {
+		
+			System.out.println("Boom! You lose.");
+			allRight = false;
+		}
+		
+//		while (true) {
+			
+//			try {
+//				String response = scan.next();
+//				response = response.trim().toLowerCase();
+//				board[rowGuess - 1][columnGuess - 1].guess = true;
+//				
+//				if ((response.equals("y") && board[rowGuess - 1][columnGuess - 1].identity == Cell.mine) || (response.equals("n") && board[rowGuess - 1][columnGuess - 1].identity != Cell.mine)) {
+//					
+//					board[rowGuess - 1][columnGuess - 1].correct = true;
+//					minesFound ++;
+//					break;
+//				}
+//				else if ((response.equals("y") && board[rowGuess - 1][columnGuess - 1].identity != Cell.mine) || (response.equals("n") && board[rowGuess - 1][columnGuess - 1].identity == Cell.mine)) {
+//					
+//					System.out.println("Boom! You lose.");
+//					allRight = false;
+//					break;
+//				}
+//				else {
+//					
+//					throw new InvalidInputException();
+//				}
+//				
+//			} catch (InvalidInputException e) {
+//				
+//				System.out.println("Invalid input, please try again.");
+//			}
 	}
 		
 	public void playAgain() throws InvalidInputException{
